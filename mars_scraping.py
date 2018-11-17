@@ -110,7 +110,7 @@ def scrape():
     scrape_dict = {
         "News" : news_dict,
         "JPL" : img_dict,
-        "Weather" : weather
+        "Weather" : weather,
         "Facts" : table_html,
         "USGS" : hemisphere_image_urls
     }
