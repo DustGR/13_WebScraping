@@ -13,9 +13,11 @@ def usgs_findlink(html):
     """Takes HTML from https://astrogeology.usgs.gov/ hemisphere search results"""
     """returns a dictionary with {title:<title>, img_url:<url>"""
     lsoup = bs(html, "html.parser")
-    img_url = lsoup.find('dt', text='Filename').find_next_sibling().a['href']
-    #Finds the table entry filename, then 'next sibling' finds the table entry next to it, which is the link 
-    #(accessed by .a to find the anchor tag, and [href] to read the text)
+    dl_links = lsoup.find('div', class_='downloads')  #Gets everything in the 'downloads' div
+    for item in dl_links.find_all('li'):  #loops through the links looking for the 'sample' - my browser wouldn't load the original because of 'tif' format
+        if (item.a.get_text()) == 'Sample':
+            img_url = item.a['href']
+            break
     
     lastchar = lsoup.title.text.find(' Enhanced') #Finds the char number of the space before the word enhanced - 
     #which comes after the hemisphere name in the HTML title

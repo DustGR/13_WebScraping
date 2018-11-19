@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mission to Mars!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <header>
+        <div class='container-fluid text-center'>
+            <h1 class='text-center'>
+                Mission to Mars
+            </h1>
+            <a class='btn btn-default' href="/scrape">Scrape New Data</a>
+        </div>
+</header>
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='col-md-12'>
+            <article>
+            <h3>
+                Latest Mars News
+            </h3>
+            <h5><strong>
+                {{ data.News.news_title }}
+            </h5></strong>
+            <p>
+                {{ data.News.news_text }}
+            </p>
+            </article>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-md-9'>
+            <h3>Featured Mars Image</h3>
+            <h5>{{ data.JPL.img_title }}</h5>
+            <figure>
+                    <img src="{{ data.JPL.img_url }}" class='img-responsive' alt="{{ data.JPL.img_title }}">
+            </figure>
+        </div>
+        <div class='col-md-3'>
+            <aside>
+            <div class='well'>
+                <h4>
+                    Current Weather on Mars
+                </h4>
+                <p>
+                    {{ data.Weather }}
+                </p>
+            </div>
+            <br>
+            <div class='container-fluid'>
+                <h4>Mars Facts</h4>
+                {{ data.Facts|safe }}
+            </div>
+            </aside>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-md-12 text-center'>
+            <h3>Mars Hemispheres</h3>
+        </div>
+    </div>
+    <div class='row'>
+        {% for fig in data.USGS %}
+            <div class='col-md-6 well'>
+                <figure>
+                    <img src="{{ fig.img_url }}" alt="{{ fig.title }}" class='img-responsive'>
+                </figure>
+                <figcaption> 
+                    <h5>
+                        {{fig.title}}
+                    </h5> 
+                </figcaption>
+            </div>
+        {% if loop.index is divisibleby 2 %} <!--This will start a new row after every even image, so our rows are 2 wide-->
+        </div>
+        <div class='row'>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>
